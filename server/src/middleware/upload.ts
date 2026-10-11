@@ -1,7 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { v4 as uuidv4 } from 'crypto';
+import { randomUUID } from 'crypto';
 
 // Setup directories
 const uploadsBaseDir = path.resolve(process.cwd(), 'uploads');

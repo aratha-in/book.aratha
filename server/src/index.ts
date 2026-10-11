@@ -38,7 +38,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads/public', express.static(publicDir));
 
 // Health check endpoint
-app.get('/api/health', (_req: Request, res: Response) => {
+// Modular API Router (mounted on both /api and / for rewrite resilience)
+const apiRouter = express.Router();
+apiRouter.get('/health', (_req: Request, res: Response) => {
   res.json({
     status: 'ok',
     service: 'Aratha Publication Backend API',
@@ -46,17 +48,18 @@ app.get('/api/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
+apiRouter.use('/auth', authRouter);
+apiRouter.use('/books', bookRouter);
+apiRouter.use('/authors', authorRouter);
+apiRouter.use('/categories', categoryRouter);
+apiRouter.use('/services', serviceRouter);
+apiRouter.use('/enquiries', enquiryRouter);
+apiRouter.use('/content', contentRouter);
+apiRouter.use('/upload', uploadRouter);
+apiRouter.use('/admin', adminRouter);
 
-// API Routes
-app.use('/api/auth', authRouter);
-app.use('/api/books', bookRouter);
-app.use('/api/authors', authorRouter);
-app.use('/api/categories', categoryRouter);
-app.use('/api/services', serviceRouter);
-app.use('/api/enquiries', enquiryRouter);
-app.use('/api/content', contentRouter);
-app.use('/api/upload', uploadRouter);
-app.use('/api/admin', adminRouter);
+app.use('/api', apiRouter);
+app.use('/', apiRouter);
 
 // Serve frontend build in production if available
 const candidatePaths = [

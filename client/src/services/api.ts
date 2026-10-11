@@ -1,6 +1,6 @@
 import { Book, Author, Category, PublishingService, PublishingEnquiry, FAQ, Testimonial, SitePage, DashboardMetrics, User } from '../types';
 
-const API_BASE = '/api';
+const API_BASE = (import.meta.env.VITE_API_URL as string) || '/api';
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('aratha_token');

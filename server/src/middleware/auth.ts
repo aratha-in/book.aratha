@@ -16,7 +16,7 @@ export function generateToken(user: { id: string; email: string; name: string; r
   return jwt.sign(
     { id: user.id, email: user.email, name: user.name, role: user.role },
     config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn }
+    { expiresIn: config.jwtExpiresIn as any }
   );
 }
 

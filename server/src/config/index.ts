@@ -8,8 +8,8 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
-  appUrl: process.env.APP_URL || 'http://localhost:5173',
-  apiUrl: process.env.API_URL || 'http://localhost:5000',
+  appUrl: process.env.CLIENT_URL || process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:5173'),
+  apiUrl: process.env.API_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api` : 'http://localhost:5000'),
   databaseUrl: process.env.DATABASE_URL || '',
   jwtSecret: process.env.JWT_SECRET || 'aratha_secret_key_at_least_32_chars_long_2026',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
@@ -21,5 +21,5 @@ export const config = {
   resendApiKey: process.env.RESEND_API_KEY || '',
   emailFrom: process.env.EMAIL_FROM || 'Aratha Publication <publishing@aratha.com>',
   contactReceiverEmail: process.env.CONTACT_RECEIVER_EMAIL || 'submissions@aratha.com',
-  corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  corsOrigin: process.env.CLIENT_URL || process.env.CORS_ORIGIN || 'http://localhost:5173',
 };
