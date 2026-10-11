@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BookOpen, Menu, X, ShieldCheck, ArrowRight } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { BookOpen, Menu, X, ArrowRight } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { user, isAuthenticated } = useAuth();
 
   const navLinks = [
     { label: 'Books', href: '/books' },
@@ -61,18 +59,8 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* CTA & Admin Button */}
+          {/* Primary CTA */}
           <div className="hidden sm:flex items-center space-x-4">
-            {isAuthenticated ? (
-              <Link
-                to="/admin"
-                className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-charcoal-900 text-gold-400 hover:bg-charcoal-800 transition-all border border-gold-500/40"
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Admin Portal ({user?.role?.replace('_', ' ')})</span>
-              </Link>
-            ) : null}
-
             <Link
               to="/enquire"
               className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-md bg-charcoal-900 text-ivory-100 hover:bg-charcoal-800 text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all shadow-subtle hover:shadow-elevated border border-charcoal-900"
@@ -118,7 +106,7 @@ export const Navbar: React.FC = () => {
               {link.label}
             </Link>
           ))}
-          <div className="pt-4 border-t border-[#E5DFD5] space-y-2">
+          <div className="pt-4 border-t border-[#E5DFD5]">
             <Link
               to="/enquire"
               onClick={() => setMobileMenuOpen(false)}
@@ -127,24 +115,6 @@ export const Navbar: React.FC = () => {
               <span>Publish Your Book</span>
               <ArrowRight className="w-4 h-4 text-gold-400" />
             </Link>
-            {isAuthenticated ? (
-              <Link
-                to="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 text-xs font-medium text-gold-700 border border-gold-300 rounded"
-              >
-                <ShieldCheck className="w-4 h-4" />
-                <span>Go to Admin Dashboard</span>
-              </Link>
-            ) : (
-              <Link
-                to="/admin/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center text-xs text-charcoal-500 hover:underline pt-2"
-              >
-                Staff Portal Sign In
-              </Link>
-            )}
           </div>
         </div>
       )}
