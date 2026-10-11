@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ivory-100 text-charcoal-900;
+  }
+  
+  h1, h2, h3, h4, .font-serif {
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+}
+
+/* Custom editorial styling */
+.editorial-border {
+  border-color: #E5DFD5;
+}
+
+.editorial-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D5BC7C, transparent);
+}
+
+.book-spine-effect {
+  position: relative;
+}
+
+.book-spine-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 14px;
+  background: linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(255,255,255,0.15) 30%, rgba(0,0,0,0.1) 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Glass and subtle card styles */
+.admin-card {
+  @apply bg-white border border-[#E5DFD5] rounded-xl shadow-subtle;
+}
