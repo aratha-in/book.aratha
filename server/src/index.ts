@@ -73,6 +73,20 @@ if (clientDistPath) {
   });
 }
 
+// Database initialization middleware for serverless cold-starts
+let isDbInitialized = false;
+app.use(async (_req: Request, _res: Response, next: NextFunction) => {
+  if (!isDbInitialized) {
+    try {
+      await initDatabase();
+      isDbInitialized = true;
+    } catch (e) {
+      console.error('Database initialization error:', e);
+    }
+  }
+  next();
+});
+
 // Global safe error handler
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error('Unhandled API Error:', err);
@@ -87,9 +101,10 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   });
 });
 
-// Start Server
+// Start Server for standalone node / dev execution
 async function startServer() {
   await initDatabase();
+  isDbInitialized = true;
 
   app.listen(config.port, () => {
     console.log(`\n========================================================`);
@@ -101,7 +116,11 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('Fatal server startup failure:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('Fatal server startup failure:', err);
+    process.exit(1);
+  });
+}
+
+export default app;
