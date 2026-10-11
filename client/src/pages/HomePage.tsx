@@ -10,7 +10,6 @@ import {
   BookOpen, 
   Award, 
   Globe, 
-  Sparkles, 
   CheckCircle2, 
   HelpCircle,
   ChevronDown
@@ -64,7 +63,7 @@ export const HomePage: React.FC = () => {
             <div className="lg:col-span-7 space-y-6">
               
               <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-ivory-200 border border-[#E5DFD5] text-charcoal-800 text-xs font-semibold uppercase tracking-widest font-mono">
-                <Sparkles className="w-3.5 h-3.5 text-gold-600" />
+                <Feather className="w-3.5 h-3.5 text-gold-600" />
                 <span>Premier Independent Book Publisher</span>
               </div>
 
